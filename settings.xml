@@ -1,7 +1,19 @@
-<servers>
-    <server>
-        <id>nexus</id>
-        <username>admin</username>
-        <password>your_password</password>
-    </server>
-</servers>
+<settings>
+
+    <servers>
+
+        <server>
+            <id>nexus-releases</id>
+            <username>admin</username>
+            <password>YOUR_NEXUS_PASSWORD</password>
+        </server>
+
+        <server>
+            <id>nexus-snapshots</id>
+            <username>admin</username>
+            <password>YOUR_NEXUS_PASSWORD</password>
+        </server>
+
+    </servers>
+
+</settings>
