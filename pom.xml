@@ -15,7 +15,10 @@
 
     <groupId>com.example</groupId>
     <artifactId>employee-management</artifactId>
-    <version>1.0</version>
+
+    <!-- Changed from 1.0 to 1.1 -->
+    <version>1.1</version>
+
     <name>employee-management</name>
     <description>Employee Management Application</description>
 
