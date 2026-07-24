@@ -1,9 +1,44 @@
-FROM eclipse-temurin:24-jdk
+pipeline {
+    agent any
 
-WORKDIR /app
+    tools {
+        jdk 'JDK-24'
+        maven 'Maven'
+    }
 
-COPY target/employee-management-1.0.jar app.jar
+    stages {
 
-EXPOSE 8085
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
-ENTRYPOINT ["java","-jar","app.jar"]
+        stage('Build') {
+            steps {
+                bat 'mvn clean package'
+            }
+        }
+
+        stage('Deploy to Nexus') {
+            steps {
+                bat 'mvn deploy'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t employee-management:1.0 .'
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                bat '''
+                docker rm -f employee-management || exit 0
+                docker run -d --name employee-management -p 8085:8085 employee-management:1.0
+                '''
+            }
+        }
+    }
+}
