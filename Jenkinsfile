@@ -8,12 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/<your-username>/EmployeeManagement.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 bat 'mvn clean package'
@@ -35,7 +29,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 bat '''
-                docker rm -f employee-management || exit 0
+                docker rm -f employee-management
                 docker run -d --name employee-management -p 8085:8085 employee-management:1.0
                 '''
             }
