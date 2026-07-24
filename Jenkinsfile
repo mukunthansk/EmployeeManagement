@@ -7,15 +7,17 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "employee-management"
-        CONTAINER_NAME = "employee-management-container"
+        IMAGE_NAME = "employee-management:1.1"
+        CONTAINER_NAME = "employee-management"
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/mukunthansk/EmployeeManagement.git',
+                    credentialsId: 'mukunthansk'
             }
         }
 
@@ -27,7 +29,7 @@ pipeline {
 
         stage('Deploy to Nexus') {
             steps {
-                bat 'mvn deploy -s settings.xml'
+                bat 'mvn deploy --settings settings.xml'
             }
         }
 
@@ -40,9 +42,8 @@ pipeline {
         stage('Remove Old Container') {
             steps {
                 bat '''
-                docker stop %CONTAINER_NAME% 2>nul
-                docker rm %CONTAINER_NAME% 2>nul
-                exit /b 0
+                docker stop %CONTAINER_NAME% || exit 0
+                docker rm %CONTAINER_NAME% || exit 0
                 '''
             }
         }
@@ -51,22 +52,6 @@ pipeline {
             steps {
                 bat 'docker run -d --name %CONTAINER_NAME% -p 8085:8085 %IMAGE_NAME%'
             }
-        }
-    }
-
-    post {
-        success {
-            echo '========================================='
-            echo 'BUILD SUCCESSFUL'
-            echo 'Application URL: http://localhost:8085'
-            echo '========================================='
-        }
-
-        failure {
-            echo '========================================='
-            echo 'BUILD FAILED'
-            echo 'Check Jenkins Console Output'
-            echo '========================================='
         }
     }
 }
