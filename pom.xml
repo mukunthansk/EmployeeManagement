@@ -1,18 +1,30 @@
-...
-<build>
-    ...
-</build>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<distributionManagement>
-    <repository>
-        <id>nexus-releases</id>
-        <url>http://localhost:8082/repository/maven-releases/</url>
-    </repository>
+    <modelVersion>4.0.0</modelVersion>
 
-    <snapshotRepository>
-        <id>nexus-snapshots</id>
-        <url>http://localhost:8082/repository/maven-snapshots/</url>
-    </snapshotRepository>
-</distributionManagement>
+    <groupId>com.example</groupId>
+    <artifactId>employee-management</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+    <!-- ALL YOUR DEPENDENCIES HERE -->
+
+    <!-- BUILD PLUGINS HERE -->
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://localhost:8082/repository/maven-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>http://localhost:8082/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
